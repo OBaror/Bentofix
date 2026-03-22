@@ -2,7 +2,7 @@ import { ArrowLeft, LogIn, ArrowRight } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import bentoFixIcon from "@/assets/bentofix-icon.png";
+import bentoFixIcon from "@/assets/bentofix-icon.svg";
 
 export function PublicHeader() {
   const navigate = useNavigate();

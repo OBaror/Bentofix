@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="bentoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366F1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8B5CF6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#bentoGrad)"/>
+  <g transform="translate(32, 32)">
+    <path d="M32 8 L56 8 L56 24 L32 24 Z" fill="white" opacity="0.9"/>
+    <path d="M8 8 L24 8 L24 24 L8 24 Z" fill="white" opacity="0.7"/>
+    <path d="M8 32 L32 32 L32 56 L8 56 Z" fill="white" opacity="0.8"/>
+    <path d="M40 32 L56 32 L56 48 L40 48 Z" fill="white" opacity="0.6"/>
+  </g>
+</svg>

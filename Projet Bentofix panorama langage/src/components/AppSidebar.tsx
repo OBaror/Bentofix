@@ -1,4 +1,4 @@
-import { Ticket, Building2, Settings, LogOut, LayoutDashboard, BarChart3, Lock } from "lucide-react";
+import { Ticket, Building2, Settings, LogOut, LayoutDashboard, ChartBar as BarChart3, Lock } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useAuth } from "@/lib/auth";
 import { useNavigate } from "react-router-dom";
@@ -15,7 +15,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
-import bentoFixIcon from "@/assets/bentofix-icon.png";
+import bentoFixIcon from "@/assets/bentofix-icon.svg";
 
 const navItems = [
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },

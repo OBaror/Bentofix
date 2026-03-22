@@ -10,16 +10,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import {
-  Plus,
-  AlertTriangle,
-  Clock,
-  CheckCircle2,
-  Lock,
-  TrendingUp,
-  Eye,
-  ImageIcon,
-} from "lucide-react";
+import { Plus, TriangleAlert as AlertTriangle, Clock, CircleCheck as CheckCircle2, Lock, TrendingUp, Eye, Image as ImageIcon } from "lucide-react";
 import {
   BarChart,
   Bar,
@@ -137,7 +128,6 @@ export default function Dashboard() {
         .order("created_at", { ascending: false });
 
       if (!data || data.length === 0) {
-        // Seed data
         const rows = seedTickets.map((t) => ({ ...t, user_id: user.id }));
         const { data: seeded } = await supabase
           .from("tickets")
@@ -150,6 +140,21 @@ export default function Dashboard() {
       setLoading(false);
     };
     fetchAndSeed();
+
+    const channel = supabase
+      .channel("tickets-changes")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "tickets" },
+        () => {
+          fetchAndSeed();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, [user]);
 
   const urgentCount = tickets.filter((t) => t.status === "urgent").length;
@@ -199,10 +204,10 @@ export default function Dashboard() {
         </div>
         <Button
           onClick={() => navigate("/tickets/new")}
-          className="rounded-2xl h-11 px-5 font-medium"
+          className="rounded-2xl h-11 px-5 font-medium hover-lift"
         >
           <Plus className="mr-2 h-4 w-4" />
-          Nouveau ticket
+          Signaler un problème
         </Button>
       </div>
 

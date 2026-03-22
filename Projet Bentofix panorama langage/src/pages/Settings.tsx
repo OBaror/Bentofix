@@ -4,8 +4,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
-import { Crown, User, Mail, Shield, Sparkles, ExternalLink, Loader2 } from "lucide-react";
-import bentoFixIcon from "@/assets/bentofix-icon.png";
+import { Crown, User, Mail, Shield, Sparkles, ExternalLink, Loader as Loader2 } from "lucide-react";
+import bentoFixIcon from "@/assets/bentofix-icon.svg";
 
 export default function Settings() {
   const { user, profile } = useAuth();

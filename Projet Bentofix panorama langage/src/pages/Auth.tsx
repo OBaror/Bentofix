@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { toast } from "sonner";
 import { PublicHeader } from "@/components/PublicHeader";
-import bentoFixIcon from "@/assets/bentofix-icon.png";
+import bentoFixIcon from "@/assets/bentofix-icon.svg";
 
 export default function Auth() {
   const [isLogin, setIsLogin] = useState(true);
@@ -34,15 +34,12 @@ export default function Auth() {
           password,
           options: {
             data: { full_name: fullName, role },
+            emailRedirectTo: undefined,
           },
         });
         if (error) throw error;
-        if (data.session) {
-          toast.success("Compte créé avec succès !");
-          navigate("/dashboard");
-        } else {
-          toast.success("Compte créé ! Vérifiez votre email.");
-        }
+        toast.success("Compte créé avec succès !");
+        navigate("/dashboard");
       }
     } catch (error: any) {
       toast.error(error.message);

@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
-import { AlertTriangle, Camera, ArrowLeft } from "lucide-react";
+import { TriangleAlert as AlertTriangle, Camera, ArrowLeft } from "lucide-react";
 import type { Database } from "@/integrations/supabase/types";
 
 type TicketCategory = Database["public"]["Enums"]["ticket_category"];
@@ -37,18 +37,27 @@ export default function NewTicket() {
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      const validTypes = ["image/jpeg", "image/png", "image/webp"];
+      if (!validTypes.includes(file.type)) {
+        toast.error("Format non supporté. Utilisez JPG, PNG ou WEBP");
+        return;
+      }
       if (file.size > 5 * 1024 * 1024) {
         toast.error("La photo ne doit pas dépasser 5 Mo");
         return;
       }
       setPhoto(file);
       setPhotoPreview(URL.createObjectURL(file));
+      toast.success("Photo ajoutée avec succès");
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user) return;
+    if (!user) {
+      toast.error("Vous devez être connecté pour signaler un incident");
+      return;
+    }
     setLoading(true);
 
     try {
@@ -59,8 +68,14 @@ export default function NewTicket() {
         const path = `${user.id}/${Date.now()}.${ext}`;
         const { error: uploadError } = await supabase.storage
           .from("ticket-photos")
-          .upload(path, photo);
-        if (uploadError) throw uploadError;
+          .upload(path, photo, {
+            cacheControl: "3600",
+            upsert: false,
+          });
+        if (uploadError) {
+          console.error("Upload error:", uploadError);
+          throw new Error(`Erreur lors de l'upload de la photo: ${uploadError.message}`);
+        }
 
         const { data: urlData } = supabase.storage
           .from("ticket-photos")
@@ -78,11 +93,15 @@ export default function NewTicket() {
         photo_url: photoUrl,
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error("Insert error:", error);
+        throw new Error(`Erreur lors de la création du ticket: ${error.message}`);
+      }
+
       toast.success("Incident signalé avec succès !");
       navigate("/dashboard");
     } catch (error: any) {
-      toast.error(error.message);
+      toast.error(error.message || "Une erreur est survenue");
     } finally {
       setLoading(false);
     }

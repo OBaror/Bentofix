@@ -1,7 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import bentoFixIcon from "@/assets/bentofix-icon.png";
+import bentoFixIcon from "@/assets/bentofix-icon.svg";
 
 export function HeroSection() {
   const navigate = useNavigate();

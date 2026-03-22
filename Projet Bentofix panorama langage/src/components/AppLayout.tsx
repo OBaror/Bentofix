@@ -3,7 +3,7 @@ import { AppSidebar } from "@/components/AppSidebar";
 import { MobileBottomBar } from "@/components/MobileBottomBar";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useNavigate } from "react-router-dom";
-import bentoFixIcon from "@/assets/bentofix-icon.png";
+import bentoFixIcon from "@/assets/bentofix-icon.svg";
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
